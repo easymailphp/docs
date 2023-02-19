@@ -1,8 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
+    <style>
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+
+        #nav {
+            background: rgb(120, 151, 255);
+            background: linear-gradient(90deg, rgba(120, 151, 255, 1) 0%, rgba(136, 164, 255, 0) 75%);
+            max-width: 300px;
+/*            padding: 10px 0;*/
+        }
+        #nav div {
+            padding: 10px;
+            margin: 0;
+            border-radius: 0 100px 100px 0;
+            transition: 0.125s;
+        }
+        #nav div:hover, #nav .active {
+            background: #7897ff;
+            cursor: default;
+        }
+        #nav a {
+            text-decoration: none;
+            color: black;
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,20 +52,26 @@
         (async () => {
             const response = await fetch('https://api.github.com/repos/easymailphp/docs/contents/');
             const data = await response.json();
-            let htmlString = '<ul>';
+            var htmlString = '';
             for (let file of data) {
-                var r = await fetch(file.path);
-                var text = await r.text();
-                var el = document.createElement('html');
-                el.innerHTML = text;
-                if (file.path.replace(/^.*[\\\/]/, '') == window.location.href.replace(/^.*[\\\/]/, '')) {
-                    htmlString += `<li class="active"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></li>`;
-                } else {
-                    htmlString += `<li><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></li>`;
+                if (file.path.endsWith('.html')) {
+                    var r = await fetch(file.path);
+                    var text = await r.text();
+                    var el = document.createElement('html');
+                    el.innerHTML = text;
+                    if (file.path.replace(/^.*[\\\/]/, '') == window.location.href.replace(/^.*[\\\/]/, '')) {
+                        htmlString += `<div class="item active"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
+                        htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
+                    } else {
+                        htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
+                        htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
+                    }
                 }
             }
-            htmlString += '</ul>';
             document.getElementById('nav').innerHTML = htmlString;
         })();
+
     </script>
-</body></html>
+</body>
+
+</html>
