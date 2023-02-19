@@ -5,6 +5,13 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+        * {
+            font-family: 'Hanken Grotesk', sans-serif;
+            box-sizing: border-box;
+        }
+
         html {
             margin: 0;
             padding: 0;
@@ -17,36 +24,108 @@
             padding: 0;
             height: 100%;
             width: 100%;
+            display: flex;
         }
 
         #nav {
-            background: rgb(120, 151, 255);
-            background: linear-gradient(90deg, rgba(120, 151, 255, 1) 0%, rgba(136, 164, 255, 0) 75%);
+            background: #F5F5F5;
             max-width: 300px;
-/*            padding: 10px 0;*/
+            width: 25%;
+            min-width: 100px;
+            flex-grow: 1;
+            height: 100%;
+            display: flex;
+            flex-flow: column;
         }
-        #nav div {
-            padding: 10px;
-            margin: 0;
-            border-radius: 0 100px 100px 0;
-            transition: 0.125s;
+
+        #items div {
+            margin: 10px 0 0 25px;
+            background: rgb(0, 101, 255);
+            background: linear-gradient(90deg, rgba(0, 101, 255, 0) 0%, rgba(0, 102, 255, 0.75) 15%, rgba(0, 106, 255, 1) 100%);
+            border-radius: 5px 0 0 5px;
         }
-        #nav div:hover, #nav .active {
-            background: #7897ff;
-            cursor: default;
+
+        #nav .active {
+            font-weight: bold;
+            background: #1467E5;
         }
+
+        #items div:hover {
+            background: #2079FF;
+        }
+
         #nav a {
             text-decoration: none;
-            color: black;
+            color: white;
             display: block;
+            padding: 5px 15px;
+        }
+        
+
+        main {
+            flex-grow: 1;
+            position: relative;
+        }
+        
+        .article {
+            position: absolute;
+            padding: 10px 25px;
+            overflow: auto;
+            max-height: 100%;
+            margin: 0;
+        }
+
+        #nav h2 {
+            padding: 0 25px;
+            flex: 0 1 auto;
+        }
+        
+        #items {
+            flex: 1 1 auto;
+            overflow: auto;
+        }
+        
+        #nav .copyright {
+            flex: 0 1 auto;
+            padding: 0 25px;
+        }
+
+        .loading {
+            padding: 10px 25px;
+        }
+        
+        .github {
+            background: #2079FF;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        
+        .github:hover {
+            background: #1467E5;
+        }
+        
+        .github:active {
+            background: #1459C1;
         }
     </style>
 </head>
 
 <body>
-    <div id="nav"></div>
+    <div id="nav">
+        <h2>EasymailPHP Docs</h2>
+        <div id="items">
+            <span class="loading">Loading directory index...</span>
+        </div>
+        <div class="copyright">
+            <p>Copyright &copy; 2023. All rights reserved.</p>
+            <a href="https://github.com/easymailphp/easymail" class="github">View on GitHub</a>
+        </div>
+    </div>
     <main>
-        <h1>EasymailPHP Docs</h1>
+        <div class="article">
+            <h1>EasymailPHP</h1>
+            <p>EasymailPHP documentations are coming soon.</p>
+        </div>
     </main>
     <script>
         (async () => {
@@ -61,17 +140,12 @@
                     el.innerHTML = text;
                     if (file.path.replace(/^.*[\\\/]/, '') == window.location.href.replace(/^.*[\\\/]/, '')) {
                         htmlString += `<div class="item active"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
-                        htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
                     } else {
-                        htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
                         htmlString += `<div class="item"><a href="${file.path}">${el.getElementsByTagName('title')[0].textContent}</a></div>`;
                     }
                 }
             }
-            document.getElementById('nav').innerHTML = htmlString;
+            document.getElementById('items').innerHTML = htmlString;
         })();
-
     </script>
-</body>
-
-</html>
+</body></html>
